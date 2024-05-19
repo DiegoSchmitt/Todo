@@ -12,6 +12,7 @@ class Task extends Model
     use HasFactory;
 
     protected $filable = [
+        'is_done',
         'title',
         'description',
         'due_date',
