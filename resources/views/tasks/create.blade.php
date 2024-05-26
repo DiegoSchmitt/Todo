@@ -5,10 +5,10 @@
         </a>
     </x-slot:btn>
 
-    <section id='create_task_section'>
+    <section id='task_section'>
         <h1>Criar Tarefa</h1>
-        <form action="" method="get">
-
+        <form  method="POST" action="{{route('task.create_action')}}">
+            @csrf
             <x-form.text_input
                 name="title"
                 label="Título da Task"
@@ -17,19 +17,20 @@
             />
 
             <x-form.text_input
-                type="date"
+                type="datetime-local"
                 name="due_date"
                 label="Data de Realização"
                 required="required"
             />
 
             <x-form.select_input
-                type="date"
-                name="due_date"
-                label="Data de Realização"
-                required="required"
+                name="category_id"
+                label="Categoria"
+                placeholder="Digite o título da sua task"
             >
-                <option> Valor qualquer</option>
+            @foreach ($categories as $category)
+                <option value="{{$category->id}}">{{$category->title}}</option>
+            @endforeach
             </x-form.select_input>
 
             <x-form.textarea_input
