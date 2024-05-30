@@ -46,4 +46,28 @@
 
         </div>
     </section>
+    <script>
+        async function taskUpdate(element){
+            let status = element.checked;
+            let taskId = element.dataset.id;
+            let url = '{{route('task.update')}}';
+            let rawResult = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-type' : 'application/json',
+                    'accept' : 'application//json'
+                },
+                body: JSON.stringify({status, taskId, _token: '{{ csrf_token() }}'})
+            });
+            result = await rawResult.json();
+
+            console.log(result);
+
+            if(result.success){
+                alert('task atualizada');
+            }else{
+                element.checked = !status;
+            }
+        }
+    </script>
 </x-layout>
