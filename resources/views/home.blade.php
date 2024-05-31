@@ -13,9 +13,13 @@
             <h2>Progresso do Dia - </h2>
             <div class="graph_header-line"></div>
             <div class="graph_header-date">
-                <img src="/assets/images/icon-prev.png"/>
-                    13 de Dez
-                <img src="/assets/images/icon-next.png"/>
+                <a href="{{route('home', ['date' => $date_prev_button])}}">
+                    <img src="/assets/images/icon-prev.png"/>
+                </a>
+                    {{$date_as_string}}
+                <a href="{{route('home', ['date' => $date_next_button])}}">
+                    <img src="/assets/images/icon-next.png"/>
+                </a>
             </div>
         </div>
         <div class="graph_header-subtitle">
@@ -32,10 +36,10 @@
     </section>
     <section class="list">
         <div class="list-header">
-            <select class="list_header-select">
-                <option value="1">
-                    Todas as tarefas
-                </option>
+            <select class="list_header-select" onChange="changeTaskStatusFilter(this)">
+                <option value="all_task">Todas as tarefas</option>
+                <option value="task_pending">Tarefas pendentes</option>
+                <option value="task_done">Tarefas realizadas</option>
             </select>
         </div>
         <div class="task_list">
@@ -46,6 +50,31 @@
 
         </div>
     </section>
+<script>
+    function changeTaskStatusFilter(e){
+        if(e.value == 'task_pending'){
+            showAllTasks();
+            document.querySelectorAll('.task_done').forEach(function(element) {
+                element.style.display = 'none';
+            });
+        } else if(e.value == 'task_done'){
+            showAllTasks();
+            document.querySelectorAll('.task_pending').forEach(function(element) {
+                element.style.display = 'none';
+            });
+        }else{
+            showAllTasks();
+        }
+    }
+
+    function showAllTasks(){
+        document.querySelectorAll('.task').forEach(function(element) {
+            element.style.display = 'block';
+        });
+    }
+
+</script>
+
     <script>
         async function taskUpdate(element){
             let status = element.checked;
